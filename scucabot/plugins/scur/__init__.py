@@ -25,6 +25,7 @@ from .utils import response, event_convert2
 welcome = on_notice()
 web = on_command("web", aliases={"网站"}, permission= GROUP, priority=1)
 help = on_command("help", aliases={"帮助"}, permission= GROUP, priority=1)
+about = on_command("about", aliases={"关于"}, permission= GROUP, priority=1)
 
 @welcome.handle()
 async def welcome(bot: Bot, event: GroupIncreaseNoticeEvent, state: T_State):
@@ -45,6 +46,12 @@ async def _(event: GroupMessageEvent):
 async def _(event: GroupMessageEvent):
     msg = SCUCABot.web(event)
     await web.finish(msg)
+
+@about.handle()
+async def _(event: GroupMessageEvent):
+    msg = "本项目为四川大学魔方协会SCUCAComp（周赛网站）的QQ机器人,已开源至Github:https://github.com/LEKOULEKOUHAO/SCUCACompQQbot"
+    msg += "\n协会网站已开源至Github:https://github.com/Westlifers/SCUCAWeb"
+    await about.finish(msg)
 #---------------------------------------------------------------------------------------------#
 party = on_command("impart", aliases={"party","聚会","银趴","淫趴"}, permission= GROUP, priority=1)
 eat = on_command("eat", aliases={"吃"}, permission= GROUP, priority=1)
