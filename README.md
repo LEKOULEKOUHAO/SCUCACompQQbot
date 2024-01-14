@@ -1,12 +1,18 @@
-# SCUCABot
+# SCUCACompQQbot
 
-## How to start
+## Introduction - 介绍
 
-1. generate project using `nb create` .
-2. create your plugin using `nb plugin create` .
-3. writing your plugins under `scucabot/plugins` folder.
-4. run your bot using `nb run` .
+本项目为四川大学魔方协会SCUCAComp的QQ机器人，提供协会周赛相关信息查询，选手成绩比较等功能。
 
-## Documentation
+## Features - 功能
 
-See [Docs](https://v2.nonebot.dev/)
+- 提供周赛相关信息查询
+- 提供其他相关功能
+
+## Contributing - 贡献
+
+欢迎任何形式的贡献！如果你有好的想法，或者发现了bug，欢迎提交issue或者pull request。
+
+## Documentation - 更多文档
+
+更多详细文档，请参见 [Docs](https://v2.nonebot.dev/)
