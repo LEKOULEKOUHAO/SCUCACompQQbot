@@ -4,6 +4,7 @@ import os
 from .data_source import CubeEvent, _font_path
 from .utils import create_table, time_convert
 from .weekrank_and_comprank_Part import response_week_ongoing
+from .scorePart import url_score, response_score
 
 #username:用户名, 返回-1代表用户未注册或本周暂无成绩，否则返回该用户本周成绩列表
 def week_results(username:str):
@@ -32,6 +33,12 @@ def week_results_display(username:str):
               ]
         for i in l:
             msg.append([i['event'],time_convert(i['best']),time_convert(i['avg'])])
+
+        data_score = response_score()
+        for user in data_score:
+            if(user['username'] == username):
+                msg.append(['','周赛积分:  '+str(user['score']),''])
+                break
 
         row = len(msg)
         i = 0
