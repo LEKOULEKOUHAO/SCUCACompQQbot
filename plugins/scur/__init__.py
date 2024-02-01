@@ -31,11 +31,12 @@ about = on_command("about", aliases={"关于"}, permission= GROUP, priority=1)
 async def welcome(bot: Bot, event: GroupIncreaseNoticeEvent, state: T_State):
     user = event.get_user_id()
     at_ = "欢迎[CQ:at,qq={}]".format(user)
-    msg = at_ + '加入🥳\n'
-    msg += "社团网站为: https://scu.yougi.top/,若要在社团网站注册账号,请实名注册,注册后请在群里告知网站管理员后台审核通过🥰"
-    msg = Message(msg)
-    msg += SCUCABot.help(event)
-    await bot.send(event,msg)
+    msg1 = at_ + '加入🥳\n'
+    msg1 += "社团网站为: https://scu.yougi.top/,若要在社团网站注册账号,请实名注册,注册后请在群里告知网站管理员后台审核通过🥰"
+    msg1 = Message(msg1)
+    msg2 = SCUCABot.help(event)
+    await bot.send(event,msg1)
+    await bot.send(event,msg2)
 
 @help.handle()
 async def _(event: GroupMessageEvent):
