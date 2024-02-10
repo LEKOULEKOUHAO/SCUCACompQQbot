@@ -90,7 +90,7 @@ async def _(event: GroupMessageEvent,args: Message = CommandArg()):
     elif args[0] not in CubeEvent:
         await reward.finish("请输入正确的项目名称😠" + event_tips)
     elif len(args) != 4:
-        await reward.finish("输入格式错误~(使用示例:/发奖 333 李俊良 李wr 李温柔)")
+        await reward.finish("输入格式错误~(使用示例:/发奖 333 选手1 选手2 选手3)")
     else:
         [msg1, msg2, msg3] = SCUCABot.reward(event,args[0],args[1],args[2],args[3])
         await reward.send(msg1)
@@ -205,9 +205,9 @@ weekresults = on_command("zcj", aliases={"周成绩"}, permission= GROUP, priori
 async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     args = args.extract_plain_text().strip().split()
     if not args:
-        await weekresults.finish("还没输入选手名~(使用示例:/开盒 李俊良)")
+        await weekresults.finish("还没输入选手名~(使用示例:/zcj 张三)")
     elif len(args) > 1:
-        await weekresults.finish("输入选手名过多~(使用示例:/开盒 李俊良)")
+        await weekresults.finish("输入选手名过多~(使用示例:/zcj 张三)")
     
     msg = SCUCABot.weekresults(event,args[0])
     await weekresults.finish(msg)
@@ -239,9 +239,9 @@ wca = on_command("wca", aliases={"官方"}, permission= GROUP, priority=1)
 async def _(event: GroupMessageEvent, args: Message = CommandArg()):
     args = args.extract_plain_text().strip().split()
     if not args:
-        await wca.finish("还未输入选手名~(使用示例:/wca 李俊良)")
+        await wca.finish("还未输入wcaid~(使用示例:/wca 2023LIYA04)")
     elif len(args) > 1:
-        await wca.finish("输入选手名过多~(使用示例:/wca 李俊良)")
+        await wca.finish("输入wcaid过多~(使用示例:/wca 2023LIYA04)")
 
     msg = SCUCABot.wca(event,args[0])
     await wca.finish(msg)
