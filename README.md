@@ -20,7 +20,7 @@
 
 欢迎任何形式的贡献！如果你有好的想法，或者发现了bug，欢迎提交issue或者pull request。
 
-感谢以下贡献者对本项目的支持和贡献：
+感谢以下贡献者对本项目的贡献和支持：
 - [Westlifers](https://github.com/Westlifers)
 
 ## Development Documentation - 开发文档
