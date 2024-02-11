@@ -20,6 +20,9 @@
 
 欢迎任何形式的贡献！如果你有好的想法，或者发现了bug，欢迎提交issue或者pull request。
 
+感谢以下贡献者对本项目的支持和贡献：
+- [Westlifers](https://github.com/Westlifers)
+
 ## Development Documentation - 开发文档
 
 如果你对开发 QQ 机器人感兴趣，或者想要了解 Nonebot 的更多信息，请参见 [Nonebot 开发文档](https://v2.nonebot.dev/)。
