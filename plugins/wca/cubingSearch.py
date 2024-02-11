@@ -14,6 +14,18 @@ headers = {
 }
 
 def fetchSearchResult(nameOrId: str) -> list[tuple[str, str]]:
+    """
+    获取关键词搜索选手得到的搜索结果
+    :param nameOrId: str
+    :return: list[tuple[str, str]] 列表中每个元素是元组 (姓名, WCA ID)
+
+    返回示例
+    [
+        ('Ailun Li (李艾伦)', '2018LIAI01'),
+        ('An Li (李安)', '2018LIAN23')
+    ]
+    """
+
     url = f'https://cubing.com/results/person?region=World&gender=all&name={nameOrId}'
     res = requests.get(url, headers=headers)
 

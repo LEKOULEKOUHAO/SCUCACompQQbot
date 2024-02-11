@@ -1,6 +1,8 @@
 import requests
 import bs4
 
+from plugins.wca.types import userDetailType
+
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'Accept-Encoding': 'gzip, deflate, br',
@@ -12,7 +14,39 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
 }
 
-def fetchDetail(wcaId: str) -> dict[str, str or dict[str, dict]]:
+def fetchDetail(wcaId: str) -> userDetailType:
+    """
+    获取wcaId对应的选手详细信息
+    :param wcaId: str
+    :return: userDetailType
+
+    返回示例
+    {
+        '姓名': 'Allen Zhang (张西)',
+        '地区': '香港',
+        '参赛次数': '1',
+        'WCA ID': '2019ZHAA02',
+        '性别': '男',
+        '参赛经历': '2019.08.24 - 2019.08.25',
+        'personalRecords': {
+            '三阶': {
+                'single': {
+                    'time': '31.45',
+                    'nationalRecord': '757',
+                    'continentalRecord': '45530',
+                    'worldRecord': '135803'
+                },
+                'average': {
+                    'time': '36.85',
+                    'worldRecord': '131595',
+                    'continentalRecord': '44132',
+                    'nationalRecord': '733'
+                }
+            },
+        }
+    }
+    """
+
     url = f'https://cubing.com/results/person/{wcaId}'
     res = requests.get(url, headers=headers)
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
