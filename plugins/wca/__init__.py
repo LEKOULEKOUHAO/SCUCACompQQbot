@@ -23,11 +23,11 @@ def getWcaResult(nameOrId: str) -> str:
     else:
         detail = fetchDetail(searchResult[0][1])
         personalRecords = detail['personalRecords']
-        rep = f'{searchResult[0][0]}({searchResult[0][1]}):\n'
-        rep += '项目  单次  ||  平均\n'
+        rep = f'{searchResult[0][0]}({searchResult[0][1]})\n'
+        rep += '项目  单次  ||  平均'
 
         for (event, time) in personalRecords.items():
-            rep += f'{event}  {time["single"]["time"]}  ||  {time["average"]["time"] if time["average"]["time"] else "--"}\n'
+            rep += f'\n{event}  {time["single"]["time"]}  ||  {time["average"]["time"] if time["average"]["time"] else "--"}'
         return rep
 
 
