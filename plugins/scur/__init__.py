@@ -16,7 +16,6 @@ from .partyPart import eat_display, party_display, draw_display, reward_display
 from .travelPart import travel_display
 from .summaryPart import summary_display
 from .scramblePart import scramble_display
-from plugins.wca.wcaPart import wca_display
 from .data_source import event_tips, CubeEvent, provincess, superusers
 from .utils import response, event_convert2
 
@@ -231,19 +230,7 @@ async def _(event: GroupMessageEvent, args = RegexMatched()):
     #msg = SCUCABot.scramble(event,event_convert2(args.group(1))) #本地用这个
     msg = SCUCABot.scramble(event,event_convert2(args)) # 服务器上用这个
     await what2pk.finish(msg)
-#---------------------------------------------------------------------------------------------#
-wca = on_command("wca", aliases={"官方"}, permission= GROUP, priority=1)
 
-@wca.handle()
-async def _(event: GroupMessageEvent, args: Message = CommandArg()):
-    args = args.extract_plain_text().strip().split()
-    if not args:
-        await wca.finish("还未输入wcaid~(使用示例:/wca 2023LIYA04)")
-    elif len(args) > 1:
-        await wca.finish("输入wcaid过多~(使用示例:/wca 2023LIYA04)")
-
-    msg = SCUCABot.wca(event,args[0])
-    await wca.finish(msg)
 #---------------------------------------------------------------------------------------------#
 #@scheduler.scheduled_job("cron", day_of_week = "sun", hour = 20, minute = 0, misfire_grace_time = 60)
 #---------------------------------------------------------------------------------------------#
@@ -328,8 +315,4 @@ class SCUCABot:
     
     def scramble(event: MessageEvent,cubeevent:str):
         msg = scramble_display(cubeevent)
-        return msg
-    
-    def wca(event: MessageEvent, wca_id:str):
-        msg = wca_display(wca_id)
         return msg
