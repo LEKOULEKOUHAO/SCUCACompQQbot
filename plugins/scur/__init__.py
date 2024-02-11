@@ -1,8 +1,7 @@
-from nonebot import on_command, on_notice, on_regex, get_bot, require
+from nonebot import on_command, on_notice, on_regex
 from nonebot.typing import T_State
 from nonebot.params import CommandArg, RegexMatched
 from nonebot.adapters.onebot.v11 import MessageEvent, GroupMessageEvent, GroupIncreaseNoticeEvent, Bot, GROUP, Message
-from nonebot.permission import SUPERUSER
 #from nonebot_plugin_apscheduler import scheduler
 
 from .helpPart import help_display, web_display
@@ -17,7 +16,7 @@ from .partyPart import eat_display, party_display, draw_display, reward_display
 from .travelPart import travel_display
 from .summaryPart import summary_display
 from .scramblePart import scramble_display
-from .wcaPart import wca_display
+from plugins.wca.wcaPart import wca_display
 from .data_source import event_tips, CubeEvent, provincess, superusers
 from .utils import response, event_convert2
 

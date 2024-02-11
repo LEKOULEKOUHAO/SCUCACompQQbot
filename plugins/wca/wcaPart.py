@@ -1,5 +1,5 @@
-from .data_source import wca_url
-from .utils import response
+from plugins.scur.data_source import wca_url
+from plugins.scur.utils import response
 
 def key2event(key):
     match key:
