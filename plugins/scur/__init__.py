@@ -2,7 +2,7 @@ from nonebot import on_command, on_notice, on_regex
 from nonebot.typing import T_State
 from nonebot.params import CommandArg, RegexMatched
 from nonebot.adapters.onebot.v11 import MessageEvent, GroupMessageEvent, GroupIncreaseNoticeEvent, Bot, GROUP, Message
-#from nonebot_plugin_apscheduler import scheduler
+from .scheduler import *
 
 from .helpPart import help_display, web_display
 from .scurPart import record_display
