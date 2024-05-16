@@ -9,7 +9,7 @@
 
 本项目基于 [Nonebot](https://nonebot.dev/) 开发，并通过 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 连接到QQ服务器。Nonebot 是一个基于 Python 的开源 QQ 机器人框架，go-cqhttp 是一个用于连接 QQ 服务器的开源工具。
 
-目前正在考虑使用 [OpenShamrock](https://github.com/whitechi73/OpenShamrock)框架作为gocq登录的替代方案。
+现已改用[Lagrange.Core](https://lagrangedev.github.io/Lagrange.Doc/)作为gocq登录的替代方案。
 
 ## Features - 功能
 
