@@ -1,3 +1,5 @@
+import re
+
 import requests
 import json
 from PIL import Image, ImageDraw, ImageFont
@@ -104,8 +106,9 @@ def event_convert(event:str):
     return msg
 
 #发打乱用，event:项目
-def event_convert2(event:str):
-    match event:
+def event_convert2(event:re.Match):
+    cubeevent = event.string
+    match event.string:
         case"/2":
             cubeevent = "222"
         case"/3":
