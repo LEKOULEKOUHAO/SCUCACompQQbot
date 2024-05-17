@@ -1,12 +1,19 @@
 import nonebot
 
+from ..utils import response
+
 nonebot.require("nonebot_plugin_apscheduler")
 
 from nonebot_plugin_apscheduler import scheduler
 
 
-# 每周日20:00执行
-@scheduler.scheduled_job("cron", day_of_week='sun', hour='20', minute='0', second='0', id="job_0")
+# 每天8:00执行
+@scheduler.scheduled_job("cron", hour='8', minute='0', second='0', id="job_0")
 async def run_weekly():
     bot = nonebot.get_bot()
-    # await bot.send_msg(message_type="group", group_id=231447662, message="每周日20:00跑")
+    scrambles = response('http://localhost:2020/scramble/333?numberOfScrambles=5')['scrambles']
+
+    message = '起床做题：\n\n' + '\n\n'.join([f'{i+1}. ' + s for i, s in enumerate(scrambles)])
+
+    # await bot.send_msg(message_type="group", group_id=783204511, message=message)
+    await bot.send_msg(message_type="group", group_id=231447662, message=message)
