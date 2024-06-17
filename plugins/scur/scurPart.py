@@ -36,8 +36,8 @@ def record():
                 if(j['event'] != i['event']):
                     avg.insert(avg.index(i),{'event':j['event'],'username':j['username'],'avg':0})
 
-            if len(avg) < len(best):#若avg和best长度不一致，将avg补齐，补齐成绩为DNF，选手为对应项目单次纪录拥有者
-                avg.append({'event':best[-1]['event'],'username':best[-1]['username'],'avg':0})
+            while len(avg) < len(best):#若avg和best长度不一致，将avg补齐，补齐成绩为DNF，选手为对应项目单次纪录拥有者
+                avg.append({'event':best[len(avg)]['event'],'username':best[len(avg)]['username'],'avg':0})
 
             for i,j in zip(avg,best):
                 msg.append([time_convert(j['best']),j['username'],i['event'],i['username'],time_convert(i['avg'])])
