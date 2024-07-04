@@ -49,7 +49,7 @@ def getWRResult(includeOld: bool) -> str:
     rep = "世界 综合 记录\n单次 平均\n"
     for event in data:
         try:
-            rep += f'{event["event"]} {event["single"][0]["player"] + " " + event["single"][0]["time"] if event["single"][0] else "-"} || {event["average"][0]["player"] + "" + event["average"][0]["time"] if event["average"] else "-"}\n'
+            rep += f'{event["event"]} {event["single"][0]["player"] + " " + event["single"][0]["time"] if event["single"][0] else "-"} || {event["average"][0]["player"] + " " + event["average"][0]["time"] if event["average"] else "-"}\n'
         except:
             print(event)
     return rep
