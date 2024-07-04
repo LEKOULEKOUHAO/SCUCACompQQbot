@@ -14,7 +14,8 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
 }
 
-def fetchDetail(wcaId: str) -> userDetailType:
+
+def fetchUserDetail(wcaId: str) -> userDetailType:
     """
     获取wcaId对应的选手详细信息
     :param wcaId: str
@@ -80,3 +81,76 @@ def fetchDetail(wcaId: str) -> userDetailType:
     # 3. 拼接personalInfo和personalRecords
     return {**personalInfo, 'personalRecords': personalRecords}
 
+
+def fetchWR(includeOld):
+    """
+    获取当前世界纪录
+    :param includeOld:
+    :return:
+
+    返回示例
+    [
+        {
+            'event': '三阶',
+            'single': [
+                {
+                    'player': 'Yusheng Du (杜宇生)',
+                    'time': '3.47'
+                }
+            ],
+            'average': [
+                {
+                    'player': 'Yusheng Du (杜宇生)',
+                    'time': '5.53'
+                }
+            ]
+        },
+        ...
+    ]
+    """
+
+
+    url = f'https://cubing.com/results/records?region=World&type=current'
+    res = requests.get(url, headers=headers)
+    soup = bs4.BeautifulSoup(res.text, 'html.parser')
+
+    table = soup.find('table', class_='table table-bordered table-condensed table-hover table-boxed')
+    trs = table.find('tbody').find_all('tr')
+    # class为空的tr表示项目名，其后直到下一个项目名的tr都是该项目的世界纪录，按这个规则分组数据
+    WRs = []
+    current_WR = {}
+    for tr in trs:
+        if tr.attrs == {}:
+            if current_WR:  # 如果current_WR不为空，说明这至少是第二个项目，将上一个项目的数据加入WRs
+                WRs.append(current_WR)
+            current_WR = {
+                'event': tr.find_all('td')[0].text.strip(),
+                'single': [],
+                'average': []
+            }
+        else:
+            player = tr.find_all('td')[3].text.strip()
+            # 如果player中有括号，且括号里是中文字符，只要括号里的名字，否则只要括号外的名字
+            if '(' in player:
+                player_name_in = player.split('(')[1].split(')')[0]
+                player_name_out = player.split('(')[0]
+                if '\u4e00' <= player_name_in[0] <= '\u9fff':
+                    player = player_name_in
+                else:
+                    player = player_name_out
+
+            if tr.find_all('td')[1].text:  # 如果第二个td有内容，说明这是单次成绩，否则是平均成绩
+                current_WR['single'].append({
+                    'player': player,
+                    'time': tr.find_all('td')[1].text.strip(),
+                })
+            else:
+                current_WR['average'].append({
+                    'player': player,
+                    'time': tr.find_all('td')[2].text.strip(),
+                })
+
+    if not includeOld:  # 排除掉已不存在的项目：八板，十二板，脚拧
+        WRs = [WR for WR in WRs if WR['event'] not in ['八板', '十二板', '脚拧']]
+
+    return WRs

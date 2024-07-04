@@ -2,10 +2,11 @@ from nonebot import on_command
 from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11 import GroupMessageEvent, GROUP, Message
 
-from plugins.wca.cubingSearch import fetchSearchResult
-from plugins.wca.fetchDetail import fetchDetail
+from plugins.wca.cubingSearch import *
+from plugins.wca.fetchDetail import *
 
 wca = on_command("wca", aliases={"官方"}, permission=GROUP, priority=1)
+wr = on_command("wr", aliases={"纪录"}, permission=GROUP, priority=1)
 
 def getWcaResult(nameOrId: str) -> str:
     searchResult = fetchSearchResult(nameOrId)
@@ -21,7 +22,7 @@ def getWcaResult(nameOrId: str) -> str:
         rep += '请提供更多信息以缩小范围'
         return rep
     else:
-        detail = fetchDetail(searchResult[0][1])
+        detail = fetchUserDetail(searchResult[0][1])
         personalRecords = detail['personalRecords']
         rep = f'{searchResult[0][0]}({searchResult[0][1]})\n'
         rep += '项目  单次  ||  平均'
@@ -41,3 +42,27 @@ async def _(event: GroupMessageEvent, args: Message = CommandArg()):
 
     msg = getWcaResult(args[0])
     await wca.finish(msg)
+
+
+def getWRResult(includeOld: bool) -> str:
+    data = fetchWR(includeOld)
+    rep = "世界 综合 记录\n单次 平均\n"
+    for event in data:
+        try:
+            rep += f'{event["event"]} {event["single"][0]["player"] + " " + event["single"][0]["time"] if event["single"][0] else "-"} || {event["average"][0]["player"] + "" + event["average"][0]["time"] if event["average"] else "-"}\n'
+        except:
+            print(event)
+    return rep
+
+
+@wr.handle()
+async def _(event: GroupMessageEvent, args: Message = CommandArg()):
+    args = args.extract_plain_text().strip().split()
+    include_old = False
+    if len(args) > 1:
+        await wr.finish("输入参数过多")
+    elif len(args) == 1:
+        include_old = True
+
+    msg = getWRResult(include_old)
+    await wr.finish(msg)
