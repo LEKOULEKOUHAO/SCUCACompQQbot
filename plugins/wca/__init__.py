@@ -2,8 +2,8 @@ from nonebot import on_command
 from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11 import GroupMessageEvent, GROUP, Message
 
-from plugins.wca.cubingSearch import *
-from plugins.wca.fetchDetail import *
+from .cubingSearch import *
+from .fetchDetail import *
 
 wca = on_command("wca", aliases={"官方"}, permission=GROUP, priority=1)
 wr = on_command("wr", aliases={"纪录"}, permission=GROUP, priority=1)
