@@ -28,14 +28,24 @@ def response_special_ongoing():
 def week_list(event:str):
     l = response_week_ongoing()['result_set']
     list_week = list(filter(lambda x:x['event'] == event,l))
-    list_week.sort(key = lambda x:x['avg'] if x['avg'] > 0 else float("inf"))
+    #盲拧按单次成绩排序
+    if event in ['333bld','444bld','555bld']:
+        list_week.sort(key = lambda x:x['best'] if x['best'] > 0 else float("inf"))
+    else:
+        list_week.sort(key = lambda x:x['avg'] if x['avg'] > 0 else float("inf"))
+
     return list_week
 
 #用于提取正赛某一项目的所有已上传成绩并以avg排序，event：项目名(排序时将0即DNF处理为无穷)
 def spec_list(event:str):
     l = response_special_ongoing()['result_set']
     list_spec = list(filter(lambda x:x['event'] == event,l))
-    list_spec.sort(key = lambda x:x['avg'] if x['avg'] > 0 else float("inf"))
+    #盲拧按单次成绩排序
+    if event in ['333bld','444bld','555bld']:
+        list_spec.sort(key = lambda x:x['best'] if x['best'] > 0 else float("inf"))
+    else:
+        list_spec.sort(key = lambda x:x['avg'] if x['avg'] > 0 else float("inf"))
+        
     return list_spec
 
 #用于获取比赛开设项目数，参赛人数
