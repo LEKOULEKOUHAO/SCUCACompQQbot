@@ -48,7 +48,8 @@ def create_table(width, height, font_path, font_size, rows, cols, text, h_lines=
             # 绘制文字
             if row < len(text) and col < len(text[row]):
                 cell_text = text[row][col]
-                text_width, text_height = font.getsize(str(cell_text))
+                text_bbox = font.getbbox(str(cell_text))
+                text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
                 if align == 'center':
                     text_x = cell_x + (col_width - text_width) // 2
                 elif align == 'right':
