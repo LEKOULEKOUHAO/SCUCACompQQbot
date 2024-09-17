@@ -75,35 +75,35 @@ def create_table(width, height, font_path, font_size, rows, cols, text, h_lines=
 def event_convert(event:str):
     match event:
         case "222":
-            msg = "二阶速拧  SCU  历史TOP10"
+            msg = "二阶速拧  SCU  现役TOP10"
         case "333":
-            msg = "三阶速拧  SCU  历史TOP10"
+            msg = "三阶速拧  SCU  现役TOP10"
         case "444":
-            msg = "四阶速拧  SCU  历史TOP10"
+            msg = "四阶速拧  SCU  现役TOP10"
         case "555":
-            msg = "五阶速拧  SCU  历史TOP10"
+            msg = "五阶速拧  SCU  现役TOP10"
         case "666":
-            msg = "六阶速拧  SCU  历史TOP10"
+            msg = "六阶速拧  SCU  现役TOP10"
         case "777":
-            msg = "七阶速拧  SCU  历史TOP10"
+            msg = "七阶速拧  SCU  现役TOP10"
         case "skewb":
-            msg = "斜转魔方  SCU  历史TOP10"
+            msg = "斜转魔方  SCU  现役TOP10"
         case "pyra":
-            msg = "金字塔  SCU  历史TOP10"
+            msg = "金字塔  SCU  现役TOP10"
         case "sq1":
-            msg = "SQ1  SCU  历史TOP10"
+            msg = "SQ1  SCU  现役TOP10"
         case "minx":
-            msg = "五魔方  SCU  历史TOP10"
+            msg = "五魔方  SCU  现役TOP10"
         case "clock":
-            msg = "魔表  SCU  历史TOP10"
+            msg = "魔表  SCU  现役TOP10"
         case "333oh":
-            msg = "三阶单手  SCU  历史TOP10"
+            msg = "三阶单手  SCU  现役TOP10"
         case "333bld":
-            msg = "三阶盲拧  SCU  历史TOP10"
+            msg = "三阶盲拧  SCU  现役TOP10"
         case "444bld":
-            msg = "四阶盲拧  SCU  历史TOP10"
+            msg = "四阶盲拧  SCU  现役TOP10"
         case "555bld":
-            msg = "五阶盲拧  SCU  历史TOP10"
+            msg = "五阶盲拧  SCU  现役TOP10"
     return msg
 
 #发打乱用，event:项目
