@@ -16,4 +16,4 @@ async def run_weekly():
     message = '起床做题：\n\n' + '\n\n'.join([f'{i+1}. ' + s for i, s in enumerate(scrambles)])
 
     # await bot.send_msg(message_type="group", group_id=783204511, message=message)
-    await bot.send_msg(message_type="group", group_id=231447662, message=message)
+    await bot.send_msg(message_type="group", group_id=980371417, message=message)
