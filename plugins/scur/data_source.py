@@ -9,7 +9,7 @@ _font_path_hupo = 'fonts/STHUPO.TTF'
 
 reward_background = 'figures/background.png'
 
-superusers = ['3226855380','2585687459'] #超级用户
+superusers = ['3226855380','2585687459','2545501463'] #超级用户
 
 event_tips = "(共支持以下15个项目:333, 222, 444, 555, 666, 777, 333bld, 333oh, clock, minx, pyra, skewb, sq1, 444bld, 555bld)"
 
