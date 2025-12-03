@@ -1,164 +1,112 @@
 import requests
 import json
+import logging
 
-#从接口请求数据,处理为json
-def response(url:str):
-    #尝试从接口请求数据，若失败则返回错误信息
+logger = logging.getLogger(__name__)
+
+
+def response(url: str) -> dict:
+    """
+    从接口请求数据，处理为JSON格式
+    
+    若失败则返回错误代码 99999
+    """
     try:
-        response = requests.post(url).text
-        response_json = json.loads(response)
+        response_text = requests.post(url).text
+        return json.loads(response_text)
+    except Exception as e:
+        logger.error(f"Failed to fetch data from {url}: {e}")
+        return {'code': 99999}
 
-    except:
-        response_json = {'code':99999}
 
-    return response_json
+# 时间记录规则：123456代表 12:34.56，11234代表 1:12.34，1234代表 12.34
+TIME_FORMAT_MAP = {
+    6: lambda t: f"{t[0:2]}:{t[2:4]}.{t[4:6]}",
+    5: lambda t: f"{t[0]}:{t[1:3]}.{t[3:5]}",
+    4: lambda t: f"{t[0:2]}.{t[2:4]}",
+    3: lambda t: f"{t[0]}.{t[1:3]}",
+}
+
+DNF_VALUES = {999999, 'dnf', 'dns', 'DNS', 'DNF'}
+
+
+def time_convert(time_value) -> str:
+    """将整数时间转换为标准格式字符串"""
+    if time_value in DNF_VALUES:
+        return 'DNF'
     
-#录入规则：123456代表，12:34.56，11234代表1：12.34，1234代表12.34
-def time_convert(time:int):
-    if time != 999999 and time != 'dnf' and time != 'dns' and time != 'DNS' and time != 'DNF':
-        time = str(time)
-        if len(time) == 6:
-            time = time[0:2] + ':' + time[2:4] + '.' + time[4:6]
-        elif len(time) == 5:
-            time = time[0] + ':' + time[1:3] + '.' + time[3:5]
-        elif len(time) == 4:
-            time = time[0:2] + '.' + time[2:4]
-        elif len(time) == 3:
-            time = time[0] + '.' + time[1:3]
+    time_str = str(time_value)
+    length = len(time_str)
     
-    else:
-        time = 'DNF'
+    if length in TIME_FORMAT_MAP:
+        return TIME_FORMAT_MAP[length](time_str)
+    
+    return str(time_value)
 
-    return time
-   
-def e_id2event(e_id:int):
-    match e_id:
-        case 1:
-            event = '333'
-        case 2:
-            event = '222'
-        case 3:
-            event = '444'
-        case 4:
-            event = '555'
-        case 5:
-            event = '666'
-        case 6:
-            event = '777'
-        case 7:
-            event = '333oh'
-        case 8:
-            event = 'pyram'
-        case 9:
-            event = 'skewb'
-        case 10:
-            event = 'minx'
-        case 11:
-            event = '333bf'
-        case 12:
-            event = '444bf'
-        case 13:
-            event = '555bf'
-        case 14:
-            event = '333mbf'
-        case 15:
-            event = 'sq1'
-        case 16:
-            event = '333fm'
-        case 17:
-            event = 'clock'
-        case 41:
-            event = 'e-333'
-        case 42:
-            event = 'e-333oh'
 
-    return event
+# 事件ID与事件代码的映射
+EVENT_ID_MAP = {
+    1: '333',
+    2: '222',
+    3: '444',
+    4: '555',
+    5: '666',
+    6: '777',
+    7: '333oh',
+    8: 'pyram',
+    9: 'skewb',
+    10: 'minx',
+    11: '333bf',
+    12: '444bf',
+    13: '555bf',
+    14: '333mbf',
+    15: 'sq1',
+    16: '333fm',
+    17: 'clock',
+    41: 'e-333',
+    42: 'e-333oh',
+}
 
-def event2e_id(event:str):
-    match event:
-        case '333':
-            e_id = 1
-        case '222':
-            e_id = 2
-        case '444':
-            e_id = 3
-        case '555':
-            e_id = 4
-        case '666':
-            e_id = 5
-        case '777':
-            e_id = 6
-        case '333oh':
-            e_id = 7
-        case 'pyram':
-            e_id = 8
-        case 'skewb':
-            e_id = 9
-        case 'minx':
-            e_id = 10
-        case '333bf':
-            e_id = 11
-        case '444bf':
-            e_id = 12
-        case '555bf':
-            e_id = 13
-        case '333mbf':
-            e_id = 14
-        case 'sq1':
-            e_id = 15
-        case '333fm':
-            e_id = 16
-        case 'clock':
-            e_id = 17
-        case 'e-333':
-            e_id = 41
-        case 'e-333oh':
-            e_id = 42
-        case _:
-            e_id = 0
+# 反向映射
+EVENT_CODE_MAP = {v: k for k, v in EVENT_ID_MAP.items()}
 
-    return e_id
 
-def rank_title(eventInput:str):
-    match eventInput:
-        case "222":
-            msg = '二阶速拧  One  Top10'
-        case "333":
-            msg = '三阶速拧  One  Top10'
-        case "444":
-            msg = '四阶速拧  One  Top10'
-        case "555":
-            msg = '五阶速拧  One  Top10'
-        case "666":
-            msg = '六阶速拧  One  Top10'
-        case "777":
-            msg = '七阶速拧  One  Top10'
-        case "333oh":
-            msg = '三阶单手  One  Top10'
-        case "333bf":
-            msg = '三阶盲拧  One  Top10'
-        case "333mbf":
-            msg = '三阶多盲  One  Top10'
-        case "pyram":
-            msg = '金字塔  One  Top10'
-        case "skewb":
-            msg = '斜转  One  Top10'
-        case "minx":
-            msg = '五魔方  One  Top10'
-        case "sq1":
-            msg = 'SQ1  One  Top10'
-        case "clock":
-            msg = '魔表  One  Top10'
-        case "333fm":
-            msg = '三阶最少步  One  Top10'
-        case "e-333":
-            msg = '智能三阶  One  Top10'
-        case "e-333oh":
-            msg = '智能单手  One  Top10'
-        case "444bf":
-            msg = '四阶盲拧  One  Top10'
-        case "555bf":
-            msg = '五阶盲拧  One  Top10'
+def e_id2event(e_id: int) -> str:
+    """将事件ID转换为事件代码"""
+    return EVENT_ID_MAP.get(e_id, 'unknown')
 
-    return msg
+
+def event2e_id(event: str) -> int:
+    """将事件代码转换为事件ID"""
+    return EVENT_CODE_MAP.get(event, 0)
+
+
+# 事件显示标题映射
+RANK_TITLE_MAP = {
+    "222": "二阶速拧  One  Top10",
+    "333": "三阶速拧  One  Top10",
+    "444": "四阶速拧  One  Top10",
+    "555": "五阶速拧  One  Top10",
+    "666": "六阶速拧  One  Top10",
+    "777": "七阶速拧  One  Top10",
+    "333oh": "三阶单手  One  Top10",
+    "333bf": "三阶盲拧  One  Top10",
+    "333mbf": "三阶多盲  One  Top10",
+    "pyram": "金字塔  One  Top10",
+    "skewb": "斜转  One  Top10",
+    "minx": "五魔方  One  Top10",
+    "sq1": "SQ1  One  Top10",
+    "clock": "魔表  One  Top10",
+    "333fm": "三阶最少步  One  Top10",
+    "e-333": "智能三阶  One  Top10",
+    "e-333oh": "智能单手  One  Top10",
+    "444bf": "四阶盲拧  One  Top10",
+    "555bf": "五阶盲拧  One  Top10",
+}
+
+
+def rank_title(event: str) -> str:
+    """获取排名标题"""
+    return RANK_TITLE_MAP.get(event, f"{event}  One  Top10")
+
     

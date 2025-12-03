@@ -4,7 +4,7 @@
 import nonebot
 from nonebot.adapters.onebot.v11 import Adapter as ONEBOT_V11Adapter
 
-# Custom your logger
+# 自定义日志配置（可选）
 # 
 # from nonebot.log import logger, default_format
 # logger.add("error.log",
@@ -13,21 +13,21 @@ from nonebot.adapters.onebot.v11 import Adapter as ONEBOT_V11Adapter
 #            level="ERROR",
 #            format=default_format)
 
-# You can pass some keyword args config to init function
+# 初始化 Nonebot
 nonebot.init()
 app = nonebot.get_asgi()
 
+# 获取驱动器并注册适配器
 driver = nonebot.get_driver()
 driver.register_adapter(ONEBOT_V11Adapter)
 
+# 加载内置插件
 nonebot.load_builtin_plugins("echo")
 
-# Please DO NOT modify this file unless you know what you are doing!
-# As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
+# 从 pyproject.toml 加载插件
 nonebot.load_from_toml("pyproject.toml")
 
-# Modify some config / config depends on loaded configs
-# 
+# 修改配置（可选）
 # config = driver.config
 # do something...
 
